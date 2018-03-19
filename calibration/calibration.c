@@ -11,6 +11,7 @@ size_t miss_histogram[80];
 
 size_t onlyreload(void* addr)
 {
+  maccess(addr);
   size_t time = rdtsc();
   maccess(addr);
   size_t delta = rdtsc() - time;
@@ -19,6 +20,7 @@ size_t onlyreload(void* addr)
 
 size_t flushandreload(void* addr)
 {
+  flush(addr);
   size_t time = rdtsc();
   maccess(addr);
   size_t delta = rdtsc() - time;
@@ -37,7 +39,7 @@ int main(int argc, char** argv)
     hit_histogram[MIN(79,d/5)]++;
     sched_yield();
   }
-  flush(array+1024);
+  flush(array+2*1024);
   for (int i = 0; i < 4*1024*1024; ++i)
   {
     size_t d = flushandreload(array+2*1024);
