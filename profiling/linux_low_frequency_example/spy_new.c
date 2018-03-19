@@ -17,7 +17,7 @@
 xdo_t* xdo;
 size_t nkeys = 0;
 char key[2] = {'a', 0};
-char* chars = "biswa";
+char* chars = "b";
 Window win;
 
 size_t flushandreload(void* addr, size_t duration)
@@ -51,15 +51,18 @@ void keythread()
     if (*key != lkey)
     {
       lkey = *key;
-      xdo_send_keysequence_window(xdo, CURRENTWINDOW, "ctrl+a", 0);
-      xdo_send_keysequence_window(xdo, CURRENTWINDOW, "Delete", 0);
+      xdo_send_keysequence_window(xdo, CURRENTWINDOW, "ctrl+d", 0);
+      xdo_send_keysequence_window(xdo, CURRENTWINDOW, "ctrl+c", 0);
       usleep(1500);
       count = 0;
       nkeys = 0;
     }
     count++;
     nkeys++;
-    xdo_send_keysequence_window(xdo, CURRENTWINDOW, key, 0);
+    xdo_send_keysequence_window(xdo, CURRENTWINDOW, "g", 0);
+    xdo_send_keysequence_window(xdo, CURRENTWINDOW, "p", 0);
+    xdo_send_keysequence_window(xdo, CURRENTWINDOW, "g", 0);
+    xdo_send_keysequence_window(xdo, CURRENTWINDOW, "Return", 0);
     usleep(1000);
     for (int i = 0; i < 25; ++i)
       sched_yield();
